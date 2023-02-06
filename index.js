@@ -7,7 +7,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocumment = YAML.load("./swagger.yaml");
 //const swaggerJsdoc = require('swagger-jsdoc');
 const PORT = 3000;
-app.use(express.json);
+app.use(express.json());
 app.use(fileUpload());
 app.use(cors());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocumment));
