@@ -1,0 +1,240 @@
+openapi: "3.0.0"
+info:
+  title: Swagger UI practice - Philimon Nag
+  description: Swagger ui learn by the blessing of Jesus.Its about writing docs
+  version: 1.1.0
+  contact:
+    email: philimonnag@gmail.com
+    url: "philimonnag.com"
+
+# servers:
+#    - url: "https://localhost:3000/api/v1"
+#      description: for local Development
+#    - url: "http://localhost:3000/api/v1" 
+#      description: for production 
+
+servers:
+   - url: "{protocol}://localhost:3000/api/{version}"
+     description: for local Development
+     variables:
+       version:
+          enum:
+            - v1
+            - v2
+          default: v1  
+       protocol:
+          enum:
+            - "http"
+            - "https"
+          default: "http"
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
+    BearerAuth:
+      type: http
+      scheme: bearer
+
+paths:
+  /philimon:
+    get:
+      tags:
+        - String
+      summary: returns a greet message from philimon
+      responses:
+        200:
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "mystring"
+        400:
+          description: Bad request
+        500:
+          description: server error
+ 
+  /philimon-object:
+    get:
+      tags:
+        - "object"
+      summary: retuns a course object
+      responses:
+        200:
+          description: All good success.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                      type: string
+                  name:
+                      type: string
+                  price:
+                      type: number
+        400:
+          description: Bad request.
+        500:
+          description: Server error.
+ 
+  /courses :
+    get:
+      tags:
+        - array
+      summary: retuns all courses
+      responses:
+        200:
+          description: All good success.
+          content:
+           application/json:
+            schema: 
+              type: array
+              items:
+                type: object
+                properties:
+                 id:
+                  type: string
+                 name:
+                  type: string
+                 price:
+                  type: number
+        400:
+          description: bad request.
+        500:
+          description: server error.
+
+  /course/{courseId} :
+    get:
+      tags:
+        - object
+      summary: return a course object
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id: 
+                    type: string
+                  name:
+                    type: string
+                  price:
+                    type: number
+        400:
+          description: bad request
+        500:
+          description: server error.
+                    
+  /addCourse :
+    post:
+      tags:
+        - object
+      summary: Adding new course.
+      # consumes:
+      #   - application/json
+      # produces:
+      #   - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                price:
+                  type: number 
+      responses:
+        200:
+          description: New Course added.
+          content:
+            application/json:
+              schema:
+                type: boolean
+        400:
+          description: bad request.
+        500:
+          description: server error.
+  
+  /coursequery:
+    get:
+      summary: Returns query in a object
+      parameters:
+        - name: localtion
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: device
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema :
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  price:
+                    type: number
+          description: All goood success.
+        400:
+          description: bad request.
+        500:
+          description: server error.
+ 
+  /courseupload:
+    post:
+      summary: Uploading couse image
+      parameters:
+       
+        - in: header
+          name: auth 
+          schema:
+            type: string
+          
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+        
+      responses:
+        200:
+          description: All goood success.
+        400:
+          description: bad request.
+        500:
+          description: server error.             
+        
+
+         
+          
+           
+    
+
